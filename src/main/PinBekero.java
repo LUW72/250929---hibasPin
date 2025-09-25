@@ -117,11 +117,47 @@ public class PinBekero extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        pin.megnyitasra(jPanel1, chbMutat, this);
+        for (int i = 0; i < jPanel1.getComponentCount(); i++) 
+        {
+            JButton btn = (JButton) jPanel1.getComponent(i);
+            btn.setText(i + "");
+            btn.addActionListener(new ActionListener() 
+            {
+                @Override
+                public void actionPerformed(ActionEvent e) 
+                {
+                    String szamjegy = e.getActionCommand();
+                    pin.szamjegyHozzaad(szamjegy);
+                    if(pin.keszVanE()) 
+                    {
+                        chbMutat.setEnabled(true);
+                        pin.fajlbaKiir(pin.getPin());
+                        JOptionPane.showMessageDialog(rootPane, "Pin mentve!");
+                    }
+                    
+                }
+            });
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void chbMutatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMutatActionPerformed
-        pin.checkBoxKodMegmutat(jPanel1, chbMutat);
+        if(chbMutat.isSelected()){
+            for (int i = 0; i < pin.getPin().length(); i++) 
+            {
+                int gomb = Integer.parseInt(pin.getPin().charAt(i)+"");
+                jPanel1.getComponent(gomb).setBackground(Color.red);
+            }
+        }
+        else
+        {
+            chbMutat.setEnabled(false);
+            pin.visszaallit();
+            for (int i = 0; i < jPanel1.getComponentCount(); i++) 
+            {
+                //int gomb = Integer.parseInt(pin.charAt(i)+"");
+                jPanel1.getComponent(i).setBackground(Color.LIGHT_GRAY);
+            }
+        }
     }//GEN-LAST:event_chbMutatActionPerformed
 
 
