@@ -3,16 +3,21 @@ package main;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-public class PinBekero extends javax.swing.JFrame {
+public class PinBekero extends javax.swing.JFrame 
+{
 
     private static int kattDb = 0;
     private static boolean mentve = false;
     private static String pin = "";
     
-    public PinBekero() {
+    public PinBekero() 
+    {
         initComponents();
     }
 
@@ -108,21 +113,28 @@ public class PinBekero extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        for (int i = 0; i < jPanel1.getComponentCount(); i++) {
+        for (int i = 0; i < jPanel1.getComponentCount(); i++) 
+        {
             JButton btn = (JButton) jPanel1.getComponent(i);
             btn.setText(i + "");
-            btn.addActionListener(new ActionListener() {
+            btn.addActionListener(new ActionListener() 
+            {
                 @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (kattDb <= 4) {
+                public void actionPerformed(ActionEvent e) 
+                {
+                    if(kattDb <= 4) 
+                    {
                         kattDb++;
                         pin += e.getActionCommand();
                     } 
-                    if(kattDb == 4) {
+                    if(kattDb == 4) 
+                    {
                         chbMutat.setEnabled(true);
+                        fajlbaKiir(pin);
                         JOptionPane.showMessageDialog(rootPane, "Pin mentve!");
                     }
                     
@@ -133,20 +145,38 @@ public class PinBekero extends javax.swing.JFrame {
 
     private void chbMutatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMutatActionPerformed
         if(chbMutat.isSelected()){
-            for (int i = 0; i < pin.length(); i++) {
+            for (int i = 0; i < pin.length(); i++) 
+            {
                 int gomb = Integer.parseInt(pin.charAt(i)+"");
                 jPanel1.getComponent(gomb).setBackground(Color.red);
             }
-        }else{
+        }
+        else
+        {
             chbMutat.setEnabled(false);
             kattDb = 0;
-            for (int i = 0; i < pin.length(); i++) {
+            for (int i = 0; i < pin.length(); i++) 
+            {
                 int gomb = Integer.parseInt(pin.charAt(i)+"");
                 jPanel1.getComponent(gomb).setBackground(Color.LIGHT_GRAY);
             }
         }
     }//GEN-LAST:event_chbMutatActionPerformed
 
+    private void fajlbaKiir(String pin) 
+    {
+        Path path = Path.of("pin.txt");
+        try 
+        {
+            Files.writeString(path, pin + System.lineSeparator(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+}
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
