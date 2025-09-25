@@ -44,7 +44,7 @@ public class PinModel
         } 
         catch (Exception e) 
         {
-            //JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 }
