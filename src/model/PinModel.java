@@ -35,7 +35,7 @@ public class PinModel
         pin = "";
     }
     
-    public void fajlbaKiir(String pin) 
+    public void fajlbaKiir(String pin) throws Exception 
     {
         Path path = Path.of("pinKod.txt");
         try 
@@ -44,7 +44,8 @@ public class PinModel
         } 
         catch (Exception e) 
         {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            //JOptionPane.showMessageDialog(null, e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 }

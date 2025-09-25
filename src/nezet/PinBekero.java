@@ -1,11 +1,10 @@
-package main;
+package nezet;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import model.PinModel;
@@ -13,7 +12,7 @@ import model.PinModel;
 public class PinBekero extends javax.swing.JFrame 
 {
 
-    private PinModel pin;
+    private final PinModel pin;
     
     public PinBekero() 
     {
@@ -131,7 +130,14 @@ public class PinBekero extends javax.swing.JFrame
                     if(pin.keszVanE()) 
                     {
                         chbMutat.setEnabled(true);
-                        pin.fajlbaKiir(pin.getPin());
+                        try 
+                        {
+                            pin.fajlbaKiir(pin.getPin());
+                        } 
+                        catch (Exception ex) 
+                        {
+                            Logger.getLogger(PinBekero.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         JOptionPane.showMessageDialog(rootPane, "Pin mentve!");
                     }
                     
